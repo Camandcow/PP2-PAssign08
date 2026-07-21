@@ -1,0 +1,152 @@
+```java
+/*
+ * Name: Cameron Edelman
+ * Assignment: PAssign08
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class PAssign08 extends Application {
+
+    private Label screenLabel;
+    private String pin = "";
+
+    @Override
+    public void start(Stage primaryStage) {
+
+        Label titleLabel = new Label("ATM MACHINE");
+        titleLabel.setStyle(
+                "-fx-font-size: 24px;" +
+                "-fx-font-weight: bold;"
+        );
+
+        screenLabel = new Label("Enter PIN");
+        screenLabel.setPrefWidth(250);
+        screenLabel.setAlignment(Pos.CENTER);
+        screenLabel.setStyle(
+                "-fx-font-size: 18px;" +
+                "-fx-border-color: black;" +
+                "-fx-background-color: lightgreen;" +
+                "-fx-padding: 10px;"
+        );
+
+        KeyPadCustomPane keypad = new KeyPadCustomPane(this);
+
+        Button clearButton = new Button("Clear");
+        Button enterButton = new Button("Enter");
+
+        clearButton.setPrefWidth(100);
+        enterButton.setPrefWidth(100);
+
+        clearButton.setOnAction(e -> {
+            pin = "";
+            screenLabel.setText("Enter PIN");
+            System.out.println("PIN cleared");
+        });
+
+        enterButton.setOnAction(e -> {
+
+            if (pin.length() == 4) {
+                screenLabel.setText("Access Granted");
+                System.out.println("Entered PIN: " + pin);
+            } else {
+                screenLabel.setText("Need 4 Digits");
+            }
+        });
+
+        HBox controls = new HBox(15, clearButton, enterButton);
+        controls.setAlignment(Pos.CENTER);
+
+        VBox centerBox = new VBox(20,
+                titleLabel,
+                screenLabel,
+                keypad,
+                controls);
+
+        centerBox.setAlignment(Pos.CENTER);
+        centerBox.setPadding(new Insets(20));
+
+        BorderPane root = new BorderPane();
+        root.setCenter(centerBox);
+
+        Scene scene = new Scene(root, 400, 550);
+
+        primaryStage.setTitle("ATM Simulator");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void addDigit(String digit) {
+
+        if (pin.length() < 4) {
+            pin += digit;
+
+            String hidden = "";
+
+            for (int i = 0; i < pin.length(); i++) {
+                hidden += "*";
+            }
+
+            screenLabel.setText(hidden);
+            System.out.println("Button Pressed: " + digit);
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+
+/*
+ * Extended KeyPadPane Class
+ */
+class KeyPadCustomPane extends KeyPadPane {
+
+    private PAssign08 app;
+
+    public KeyPadCustomPane(PAssign08 app) {
+        super();
+        this.app = app;
+
+        setStyle(
+                "-fx-border-color: darkgray;" +
+                "-fx-padding: 10px;" +
+                "-fx-background-color: whitesmoke;"
+        );
+    }
+
+    @Override
+    protected void registerEventHandlers() {
+
+        btn0.setStyle("-fx-font-size:16px;");
+        btn1.setStyle("-fx-font-size:16px;");
+        btn2.setStyle("-fx-font-size:16px;");
+        btn3.setStyle("-fx-font-size:16px;");
+        btn4.setStyle("-fx-font-size:16px;");
+        btn5.setStyle("-fx-font-size:16px;");
+        btn6.setStyle("-fx-font-size:16px;");
+        btn7.setStyle("-fx-font-size:16px;");
+        btn8.setStyle("-fx-font-size:16px;");
+        btn9.setStyle("-fx-font-size:16px;");
+
+        btn0.setOnAction(e -> app.addDigit("0"));
+        btn1.setOnAction(e -> app.addDigit("1"));
+        btn2.setOnAction(e -> app.addDigit("2"));
+        btn3.setOnAction(e -> app.addDigit("3"));
+        btn4.setOnAction(e -> app.addDigit("4"));
+        btn5.setOnAction(e -> app.addDigit("5"));
+        btn6.setOnAction(e -> app.addDigit("6"));
+        btn7.setOnAction(e -> app.addDigit("7"));
+        btn8.setOnAction(e -> app.addDigit("8"));
+        btn9.setOnAction(e -> app.addDigit("9"));
+    }
+}
+```
