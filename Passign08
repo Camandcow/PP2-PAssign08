@@ -1,8 +1,7 @@
-```java
-/*
- * Name: Cameron Edelman
- * Assignment: PAssign08
-https://github.com/Camandcow/PP2-PAssign08
+java
+// Name: Cameron Edelman
+// Assignment: PAssign08
+// https://github.com/Camandcow/PP2-PAssign08
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
